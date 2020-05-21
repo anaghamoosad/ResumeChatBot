@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style>
+    #textInput {
+    border: none;
+    background-color:#D3D3D3;  
+    
+}
+
+.chatbot {    
+    max-height: 500px;
+    height: fit-content;
+}
+.container{
+    height: 500px;   
+
+}
+.userText {
+    color: white;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: right;
+    line-height: 30px;
+    width:100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+
+}
+.userText span {
+    background-color: #FF8C00	;
+    padding: 10px;
+    border-radius: 10px;
+    width:100%;
+    display: inline-block
+    
+}
+.botText {
+    color: black;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: left;
+    line-height: 30px;
+    width:100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+   
+}
+.botText span {
+    background-color: #87CEFA;
+    padding: 10px;
+    border-radius: 10px;
+    width:100%;
+    display: inline-block
+    
+}
+.jumbotron {
+	padding: 2rem 1rem;
+	margin-bottom: 1rem;
+	background-color: #0099ff;
+	border-radius: .3rem;
+   
+}
+
+.border-success {
+    border-color: darkblue!important;
+    height: 400px;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
+.btna
+{
+  background-color:royalblue;
+}
+
+.btn-success {
+	color: #fff;
+	background-color: royalblue;
+	border-color: royalblue;
+}
+
+.btn-success:hover {
+	color: #fff;
+	background-color: royalblue;
+	border-color: royalblue
+}
+
+.btn-success.focus,
+.btn-success:focus {
+    box-shadow: 0 0 0 .2rem royalblue
+}
+
+.btn-success.disabled,
+.btn-success:disabled {
+	color: #fff;
+	background-color: royalblue;
+	border-color: royalblue
+}
+
+.btn-success:not(:disabled):not(.disabled).active,
+.btn-success:not(:disabled):not(.disabled):active,
+.show>.btn-success.dropdown-toggle {
+	color: #fff;
+	background-color: royalblue;
+	border-color: royalblue
+}
+
+.btn-success:not(:disabled):not(.disabled).active:focus,
+.btn-success:not(:disabled):not(.disabled):active:focus,
+.show>.btn-success.dropdown-toggle:focus {
+	box-shadow: 0 0 0 .2rem royalblue
+}
+
+
+
+</style>
+<body>
+    <h1 class="jumbotron text-center">Anagha Radhakrishnan Moosad 's Resume Chatbot</h1>
+<div class="container">
+    <div class="row">        
+        <div class="col-sm-6 offset-sm-3">            
+            <div id="chatbox" class="border-success">                
+                <br/>
+                <p class="botText"><span>Hello there!This is Anagha Radhakrishnan Moosad's Resume Bot!Please ask a question and I will try to answer it </span></p>
+            </div>
+            <div id="userInput">
+                <input id="textInput"  class="form-control" type="textbox" name="msg" placeholder="Type Your Message Here">
+                <input id="buttonInput" class="btna btn-success form-control" type="submit" value="Send">
+            </div>
+        </div>
+    </div>
+    </div>
+<script>
+    function getResponse() {
+        let userText = $("#textInput").val();
+        let userHtml = '<p class="userText"><span>' + userText + '</span></p>';
+        $("#textInput").val("");
+        $("#chatbox").append(userHtml);
+        var elem = document.getElementById('chatbox');
+        elem.scrollTop = elem.scrollHeight;
+        //document.getElementById('userInput');
+        $.get("/get", { msg: userText }).done(function(data) {
+        var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+        $("#chatbox").append(botHtml);
+        var elem = document.getElementById('chatbox');
+        elem.scrollTop = elem.scrollHeight;
+       // document.getElementById('userInput');
+});
+}
+    $("#textInput").keypress(function(e) {
+    //if enter key is pressed
+        if(e.which == 13) {
+            getResponse();
+        }
+    });
+    $("#buttonInput").click(function() {
+        getResponse();
+    });
+
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</div>
+</body>
+</html>
